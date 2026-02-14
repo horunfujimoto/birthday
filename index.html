@@ -241,6 +241,35 @@
         .float-4 { animation: float4 7.5s ease-in-out infinite; animation-delay: -3s; }
         .float-5 { animation: float5 6.5s ease-in-out infinite; animation-delay: -4s; }
         .float-symbol { animation: floatSymbol 5s ease-in-out infinite; }
+
+        /* 白い糸アニメーション（縫い糸風） */
+        .thread-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            pointer-events: none;
+            z-index: 5;
+            overflow: visible;
+        }
+        .thread-path {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.7);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 10 8;
+        }
+        .thread-mask-path {
+            fill: none;
+            stroke: white;
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
     </style>
 </head>
 <body class="pb-20 relative overflow-x-hidden">
@@ -252,17 +281,49 @@
         
         <div class="relative z-10">
             <p class="gold-text text-sm mb-4 tracking-[.3em] uppercase">Happy Birthday</p>
-            <h1 class="text-4xl md:text-5xl font-bold mb-3 leading-tight">THE SPECIAL<br>3-DAYS JOURNEY</h1>
+            <h1 class="text-4xl md:text-5xl font-bold leading-tight">THE SPECIAL<br>3-DAYS JOURNEY</h1>
 
             <!-- ハートの画像エリア -->
             <div class="heart-container" id="heartContainer">
+                <!-- 白い糸（ハートの輪郭を反時計回りに一周） -->
+                <svg class="thread-svg" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <mask id="thread-mask">
+                            <path id="thread-mask-path" class="thread-mask-path" d="
+                                M -50 300
+                                C -80 300 -10 320 60 295
+                                C 110 280 135 289 150 289
+                                C 158.5 289 285 195 285 120
+                                C 285 65 240 25 188 25
+                                C 165 25 158.5 35 150 45
+                                C 141.5 35 127.5 30 112 30
+                                C 55 30 15 75 15 130
+                                C 15 205 141.5 289 150 289
+                                C 165 289 190 280 240 295
+                                C 310 320 380 300 350 300
+                            "/>
+                        </mask>
+                    </defs>
+                    <path class="thread-path" mask="url(#thread-mask)" d="
+                        M -50 300
+                        C -80 300 -10 320 60 295
+                        C 110 280 135 289 150 289
+                        C 158.5 289 285 195 285 120
+                        C 285 65 240 25 188 25
+                        C 165 25 158.5 35 150 45
+                        C 141.5 35 127.5 30 112 30
+                        C 55 30 15 75 15 130
+                        C 15 205 141.5 289 150 289
+                        C 165 289 190 280 240 295
+                        C 310 320 380 300 350 300
+                    "/>
+                </svg>
                 <div class="heart-frame">
                     <img src="image/couple.png" alt="Memory" class="heart-image">
                 </div>
             </div>
 
-            <p class="text-sm leading-loose opacity-80">Let’s make beautiful memories together.</p>
-            <div class="w-12 h-[1px] gold-bg mx-auto mt-4 mb-16"></div>
+            <p class="text-sm leading-loose opacity-80 mt-6">Let's make beautiful memories together.</p>
         </div>
 
         <!-- スクロールインジケーター -->
@@ -312,6 +373,7 @@
             <div class="floating-symbol floating-star float-symbol" style="top: 150px; left: 5px;">✧</div>
 
             <h3 class="gold-text text-lg mb-2">Day 1</h3>
+            <div class="w-12 h-[1px] gold-bg mx-auto mt-4 mb-4"></div>
             <h2 class="text-2xl mb-8">Fun Events</h2>
             <div id="lock-day1" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
                 <p class="text-xs mb-6 opacity-70">予定を見るには合言葉を入力してください</p>
@@ -327,6 +389,7 @@
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">18:00</span><span>夜ご飯を買いに行く ＋ ケーキ購入</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">19:00</span><span>誕生日パーティー</span></li>
                 </ul>
+                
             </div>
         </section>
 
@@ -338,6 +401,7 @@
             <div class="floating-symbol floating-heart float-symbol" style="top: -10px; right: -40px;">♡</div>
 
             <h3 class="gold-text text-lg mb-2">Day 2</h3>
+            <div class="w-12 h-[1px] gold-bg mx-auto mt-4 mb-4"></div>
             <h2 class="text-2xl mb-8">Delicious Food</h2>
             
             <div id="lock-day2" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
@@ -367,6 +431,7 @@
             <div class="floating-symbol floating-star float-symbol" style="top: 160px; left: 5px;">✧</div>
 
             <h3 class="gold-text text-lg mb-2">Day 3</h3>
+            <div class="w-12 h-[1px] gold-bg mx-auto mt-4 mb-4"></div>
             <h2 class="text-2xl mb-8">Great Drinks</h2>
             
             <div id="lock-day3" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
@@ -384,6 +449,7 @@
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span>その後、解散かな？</span></li>
                 </ul>
             </div>
+
         </section>
 
     </div>
@@ -430,6 +496,31 @@
         function closeModal() {
             document.getElementById('error-modal').style.display = 'none';
         }
+
+        // 縫い糸アニメーション（マスクを使った描画）
+        (function() {
+            const maskPath = document.getElementById('thread-mask-path');
+            if (maskPath) {
+                const length = maskPath.getTotalLength();
+
+                // マスクパスを最初は非表示（stroke-dashoffset = length）
+                maskPath.style.strokeDasharray = length;
+                maskPath.style.strokeDashoffset = length;
+
+                // アニメーションを追加
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes revealThread {
+                        0% { stroke-dashoffset: ${length}; }
+                        100% { stroke-dashoffset: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+
+                maskPath.style.animation = 'revealThread 3s ease-out forwards';
+            }
+        })();
+
 
         // ハートタッチエフェクト（画面全体）
         function createHeartEffect(x, y) {
