@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,22 +43,34 @@
 
         /* ハート型の画像スタイル */
         .heart-frame {
-            width: 240px;
-            height: 240px;
+            width: 300px;
+            height: 300px;
             margin: 0 auto 20px;
             position: relative;
             /* ハートの形に切り抜き */
-            clip-path: path('M120 231.2C113.2 231.2 24 160.8 24 100.8C24 64.4 53.2 35.2 89.6 35.2C102 35.2 113.2 38.8 120 45.6C126.8 38.8 138 35.2 150.4 35.2C186.8 35.2 216 64.4 216 100.8C216 160.8 126.8 231.2 120 231.2Z');
+            clip-path: path('M150 289C141.5 289 30 201 30 126C30 80.5 66.5 44 112 44C127.5 44 141.5 48.5 150 57C158.5 48.5 172.5 44 188 44C233.5 44 270 80.5 270 126C270 201 158.5 289 150 289Z');
             background-color: #06132b;
+            filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.3)) drop-shadow(0 0 30px rgba(197, 160, 89, 0.2));
+        }
+        .heart-frame::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            background: radial-gradient(ellipse at center, transparent 60%, rgba(6, 19, 43, 0.8) 100%);
+            z-index: 2;
+            pointer-events: none;
         }
         .heart-image {
-            width: 300%;
-            height: 300%;
+            width: 150%;
+            height: 150%;
             object-fit: cover;
-            /* 白黒加工 */
-            filter: grayscale(100%);
+            object-position: center;
+            position: absolute;
+            top: 70%;
+            left: 48%;
+            transform: translate(-50%, -50%);
         }
-        /* ネイビータッチのオーバーレイ */
+        /* ふちをぼやかすオーバーレイ */
         .heart-frame::after {
             content: '';
             position: absolute;
@@ -66,8 +78,63 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(6, 19, 43, 0.4); /* 薄いネイビー */
-            mix-blend-mode: multiply;
+            background: radial-gradient(ellipse 60% 55% at 50% 50%, transparent 40%, rgba(6, 19, 43, 0.7) 70%, rgba(6, 19, 43, 1) 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* 波紋エフェクト */
+        .heart-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .floating-heart-effect {
+            position: absolute;
+            pointer-events: none;
+            font-size: 24px;
+            color: rgba(197, 160, 89, 0.8);
+            text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+            z-index: 10;
+        }
+        .floating-heart-effect.animate {
+            animation: heartFloat 2s ease-out forwards;
+        }
+        @keyframes heartFloat {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -150%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -250%) scale(0.8);
+            }
+        }
+        .ripple-ring {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            border: 2px solid rgba(197, 160, 89, 0.5);
+            z-index: 9;
+        }
+        .ripple-ring.animate {
+            animation: rippleExpand 1.2s ease-out forwards;
+        }
+        @keyframes rippleExpand {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
         }
 
         .day-content {
@@ -104,9 +171,79 @@
             font-size: 2rem;
             opacity: 0.6;
         }
+
+        /* 浮遊する背景要素 */
+        .floating-bg {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+            filter: brightness(0) invert(1);
+        }
+        .floating-symbol {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+            color: #c5a059;
+            font-size: 28px;
+        }
+        .floating-heart {
+            font-size: 150px;
+            opacity: 0.22;
+            color: transparent;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.5) 0%, rgba(197, 160, 89, 0.15) 40%, transparent 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: blur(3px);
+            text-shadow:
+                0 0 30px rgba(197, 160, 89, 0.6),
+                0 0 60px rgba(197, 160, 89, 0.5),
+                0 0 90px rgba(197, 160, 89, 0.35),
+                0 0 120px rgba(197, 160, 89, 0.25),
+                0 0 150px rgba(197, 160, 89, 0.15);
+        }
+        .floating-star {
+            text-shadow:
+                0 0 8px rgba(197, 160, 89, 0.5),
+                0 0 15px rgba(197, 160, 89, 0.3);
+        }
+
+        /* 浮遊アニメーション */
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(2deg); }
+        }
+        @keyframes float4 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(-3deg); }
+        }
+        @keyframes float5 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-22px) rotate(1deg); }
+        }
+        @keyframes floatSymbol {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-12px) scale(1.1); }
+        }
+
+        .float-1 { animation: float1 6s ease-in-out infinite; }
+        .float-2 { animation: float2 7s ease-in-out infinite; animation-delay: -1s; }
+        .float-3 { animation: float3 8s ease-in-out infinite; animation-delay: -2s; }
+        .float-4 { animation: float4 7.5s ease-in-out infinite; animation-delay: -3s; }
+        .float-5 { animation: float5 6.5s ease-in-out infinite; animation-delay: -4s; }
+        .float-symbol { animation: floatSymbol 5s ease-in-out infinite; }
     </style>
 </head>
-<body class="pb-20">
+<body class="pb-20 relative overflow-x-hidden">
 
     <!-- Hero Section -->
     <header class="relative h-screen w-full flex items-center justify-center text-center px-4 overflow-hidden">
@@ -115,28 +252,51 @@
         
         <div class="relative z-10">
             <p class="gold-text text-sm mb-4 tracking-[.3em] uppercase">Happy Birthday</p>
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">THE SPECIAL<br>3-DAYS JOURNEY</h1>
-            
+            <h1 class="text-4xl md:text-5xl font-bold mb-3 leading-tight">THE SPECIAL<br>3-DAYS JOURNEY</h1>
+
             <!-- ハートの画像エリア -->
-            <div class="heart-frame">
-                <!-- ここに好きな画像URLをいれてください -->
-                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1286&auto=format&fit=crop" alt="Memory" class="heart-image">
+            <div class="heart-container" id="heartContainer">
+                <div class="heart-frame">
+                    <img src="image/couple.png" alt="Memory" class="heart-image">
+                </div>
             </div>
 
-            <p class="text-sm leading-loose opacity-80">忘れられない物語が、今ここから始まります。</p>
-            <div class="w-12 h-[1px] gold-bg mx-auto mt-6"></div>
+            <p class="text-sm leading-loose opacity-80">Let’s make beautiful memories together.</p>
+            <div class="w-12 h-[1px] gold-bg mx-auto mt-4 mb-16"></div>
+        </div>
+
+        <!-- スクロールインジケーター -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center animate-bounce">
+            <div class="flex flex-col items-center gap-2 opacity-40">
+                <span class="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+                <svg width="16" height="24" viewBox="0 0 16 24" fill="none" class="gold-text">
+                    <path d="M8 0V20M8 20L1 13M8 20L15 13" stroke="currentColor" stroke-width="1"/>
+                </svg>
+            </div>
         </div>
     </header>
 
     <!-- Message Section -->
-    <section class="py-20 px-8 text-center max-w-lg mx-auto">
+    <section class="py-20 px-8 text-center max-w-lg mx-auto relative">
+        <!-- 浮遊要素: ケーキ1 -->
+        <div class="floating-bg float-1" style="top: 20px; left: 5px; width: 70px;"><img src="image/cake_1.png" alt="" class="w-full"></div>
+        <div class="floating-symbol floating-heart float-symbol" style="top: -30px; right: -40px;">♡</div>
+        <div class="floating-symbol floating-star float-symbol" style="bottom: 60px; left: 25px;">✧</div>
+        <div class="floating-symbol floating-star float-symbol" style="top: 100px; right: 30px;">✧</div>
+
         <div class="ornament mb-6">✧</div>
-        <h2 class="section-title text-xl mb-12 gold-text">お祝いのメッセージ</h2>
-        <p class="text-sm leading-[2.5] mb-8">
-            お誕生日おめでとうございます。<br>
-            今日からの3日間は、あなたが主役の特別な舞台。<br>
-            光り輝く思い出を一緒に作りましょう。
+        <h2 class="section-title text-xl mb-12 gold-text">Message</h2>
+        <p class="leading-[2.5] mb-8 whitespace-nowrap" style="font-size: clamp(0.7rem, 3.5vw, 0.875rem);">
+            お誕生日おめでとちゃん🐶🐾<br>
+            ３日間一緒に過ごせるのがすっごくうれしいいいっ<br>
+            楽しくてらぶな時間にしようね💕
         </p>
+
+        <!-- 花を渡すイラスト -->
+        <div class="my-8 flex justify-center">
+            <img src="image/flour.png" alt="" class="w-72 opacity-25 float-2" style="filter: brightness(0) invert(1);">
+        </div>
+
         <div class="ornament">✧</div>
     </section>
 
@@ -144,70 +304,84 @@
     <div class="container mx-auto max-w-md px-6 space-y-24 pb-20">
         
         <!-- Day 1 -->
-        <section id="day1" class="text-center">
+        <section id="day1" class="text-center relative">
+            <!-- 浮遊要素: プレゼント -->
+            <div class="floating-bg float-2" style="top: 0; right: 5px; width: 65px;"><img src="image/present.png" alt="" class="w-full"></div>
+            <div class="floating-symbol floating-heart float-symbol" style="top: -20px; left: -50px;">♡</div>
+            <div class="floating-symbol floating-star float-symbol" style="bottom: 50px; right: 20px;">✧</div>
+            <div class="floating-symbol floating-star float-symbol" style="top: 150px; left: 5px;">✧</div>
+
             <h3 class="gold-text text-lg mb-2">Day 1</h3>
-            <h2 class="text-2xl mb-8">第1幕：序奏</h2>
-            
+            <h2 class="text-2xl mb-8">Fun Events</h2>
             <div id="lock-day1" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
                 <p class="text-xs mb-6 opacity-70">予定を見るには合言葉を入力してください</p>
-                <input type="text" id="pass-day1" placeholder="合言葉を入力" class="input-gold text-center w-full mb-6">
-                <button onclick="checkPass(1, 'サッカー')" class="btn-gold rounded-full">扉を開ける</button>
+                <input type="text" id="pass-day1" placeholder="合言葉を入力(ひらがな)" class="input-gold text-center w-full mb-6">
+                <button onclick="checkPass(1)" class="btn-gold rounded-full">扉を開ける</button>
             </div>
 
             <div id="content-day1" class="day-content">
-                <div class="mb-6 rounded overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop" alt="Day 1 Image" class="w-full h-48 object-cover grayscale-[0.3]">
-                </div>
                 <ul class="text-left text-sm space-y-4">
-                    <li class="flex"><span class="gold-text mr-4">15:00</span><span>ホテルへチェックイン</span></li>
-                    <li class="flex"><span class="gold-text mr-4">18:00</span><span>バースデー・ディナー開始</span></li>
-                    <li class="flex"><span class="gold-text mr-4">21:00</span><span>サプライズケーキの登場</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00</span><span>ランチ</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">（移動）</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">15:00</span><span>川崎フロンターレ のサッカー観戦</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">18:00</span><span>夜ご飯を買いに行く ＋ ケーキ購入</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">19:00</span><span>誕生日パーティー</span></li>
                 </ul>
             </div>
         </section>
 
         <!-- Day 2 -->
-        <section id="day2" class="text-center">
+        <section id="day2" class="text-center relative">
+            <!-- 浮遊要素: ケーキ2 -->
+            <div class="floating-bg float-3" style="top: 0; left: 5px; width: 65px;"><img src="image/cake_2.png" alt="" class="w-full"></div>
+            <div class="floating-symbol floating-star float-symbol" style="top: 60px; right: 15px;">✧</div>
+            <div class="floating-symbol floating-heart float-symbol" style="top: -10px; right: -40px;">♡</div>
+
             <h3 class="gold-text text-lg mb-2">Day 2</h3>
-            <h2 class="text-2xl mb-8">第2幕：絶頂</h2>
+            <h2 class="text-2xl mb-8">Delicious Food</h2>
             
             <div id="lock-day2" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
                 <p class="text-xs mb-6 opacity-70">予定を見るには合言葉を入力してください</p>
-                <input type="text" id="pass-day2" placeholder="合言葉を入力" class="input-gold text-center w-full mb-6">
-                <button onclick="checkPass(2, 'さかな')" class="btn-gold rounded-full">扉を開ける</button>
+                <input type="text" id="pass-day2" placeholder="合言葉を入力(ひらがな)" class="input-gold text-center w-full mb-6">
+                <button onclick="checkPass(2)" class="btn-gold rounded-full">扉を開ける</button>
             </div>
 
             <div id="content-day2" class="day-content">
-                <div class="mb-6 rounded overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2074&auto=format&fit=crop" alt="Day 2 Image" class="w-full h-48 object-cover grayscale-[0.3]">
-                </div>
                 <ul class="text-left text-sm space-y-4">
-                    <li class="flex"><span class="gold-text mr-4">10:00</span><span>特別な場所へのアクティビティ</span></li>
-                    <li class="flex"><span class="gold-text mr-4">13:00</span><span>オーシャンビューのランチ</span></li>
-                    <li class="flex"><span class="gold-text mr-4">20:00</span><span>星空の下でシャンパン</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">お昼頃</span><span>遅めの起床(予言)</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00</span><span>昼食</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">午後</span><span>東京へ移動</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span>きよくんへの誕生日プレゼント購入</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">17:00</span><span>夜ご飯</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">お店：釣船茶屋ざうお 新宿店</span></li>
                 </ul>
             </div>
         </section>
 
         <!-- Day 3 -->
-        <section id="day3" class="text-center">
+        <section id="day3" class="text-center relative">
+            <!-- 浮遊要素: クラッカー -->
+            <div class="floating-bg float-4" style="top: 0; right: 5px; width: 65px;"><img src="image/cracker.png" alt="" class="w-full"></div>
+            <div class="floating-symbol floating-heart float-symbol" style="top: -20px; left: -50px;">♡</div>
+            <div class="floating-symbol floating-star float-symbol" style="bottom: 60px; right: 15px;">✧</div>
+            <div class="floating-symbol floating-star float-symbol" style="top: 160px; left: 5px;">✧</div>
+
             <h3 class="gold-text text-lg mb-2">Day 3</h3>
-            <h2 class="text-2xl mb-8">第3幕：余韻</h2>
+            <h2 class="text-2xl mb-8">Great Drinks</h2>
             
             <div id="lock-day3" class="p-8 border border-[#c5a059] border-opacity-30 bg-[#0a1a3a]">
                 <p class="text-xs mb-6 opacity-70">予定を見るには合言葉を入力してください</p>
-                <input type="text" id="pass-day3" placeholder="合言葉を入力" class="input-gold text-center w-full mb-6">
-                <button onclick="checkPass(3, 'ビール')" class="btn-gold rounded-full">扉を開ける</button>
+                <input type="text" id="pass-day3" placeholder="合言葉を入力(ひらがな)" class="input-gold text-center w-full mb-6">
+                <button onclick="checkPass(3)" class="btn-gold rounded-full">扉を開ける</button>
             </div>
 
             <div id="content-day3" class="day-content">
-                <div class="mb-6 rounded overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop" alt="Day 3 Image" class="w-full h-48 object-cover grayscale-[0.3]">
-                </div>
                 <ul class="text-left text-sm space-y-4">
-                    <li class="flex"><span class="gold-text mr-4">11:00</span><span>遅めのレイトチェックアウト</span></li>
-                    <li class="flex"><span class="gold-text mr-4">12:30</span><span>旅を締めくくる最高の食事</span></li>
-                    <li class="flex"><span class="gold-text mr-4">15:00</span><span>思い出と共に帰路へ</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">お昼頃</span><span>またまた遅めの起床(予言)</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00頃</span><span>昼食</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">14:00</span><span>キリンビール 工場見学</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">見学後</span><span>カフェで少し休憩</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span>その後、解散かな？</span></li>
                 </ul>
             </div>
         </section>
@@ -215,8 +389,14 @@
     </div>
 
     <!-- Footer -->
-    <footer class="mt-20 py-10 text-center border-t border-[#c5a059] border-opacity-20 px-4">
-        <p class="text-[0.6rem] tracking-[.4em] opacity-40 uppercase">A Private Journey for Your Special Day</p>
+    <footer class="mt-20 py-16 text-center border-t border-[#c5a059] border-opacity-20 px-4 relative">
+        <!-- 浮遊要素: ケーキ3 -->
+        <div class="floating-bg float-5" style="top: 15px; left: 20px; width: 60px;"><img src="image/cake_3.png" alt="" class="w-full"></div>
+        <div class="floating-symbol floating-heart float-symbol" style="top: -50px; right: -30px;">♡</div>
+        <div class="floating-symbol floating-star float-symbol" style="bottom: 20px; left: 60px;">✧</div>
+        <div class="floating-symbol floating-star float-symbol" style="top: 40px; right: 60px;">✧</div>
+
+        <p class="tracking-[.2em] opacity-40 uppercase whitespace-nowrap" style="font-size: clamp(0.4rem, 2.5vw, 0.6rem);">A Private Journey for Your Special Day</p>
     </footer>
 
     <!-- Error Modal Custom -->
@@ -227,11 +407,13 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
-        function checkPass(day, correctPass) {
+        function checkPass(day) {
             const input = document.getElementById('pass-day' + day).value;
             const lockSection = document.getElementById('lock-day' + day);
             const contentSection = document.getElementById('content-day' + day);
+            const correctPass = PASSWORDS['day' + day];
 
             if (input === correctPass) {
                 lockSection.style.display = 'none';
@@ -248,6 +430,71 @@
         function closeModal() {
             document.getElementById('error-modal').style.display = 'none';
         }
+
+        // ハートタッチエフェクト（画面全体）
+        function createHeartEffect(x, y) {
+            // 浮かび上がるハート（大中小）
+            const sizes = [
+                { size: 36, delay: 0 },    // 大
+                { size: 24, delay: 80 },   // 中
+                { size: 16, delay: 150 }   // 小
+            ];
+
+            sizes.forEach((s, i) => {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart-effect';
+                    heart.textContent = '♡';
+                    heart.style.position = 'fixed';
+                    heart.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+                    heart.style.top = (y + (Math.random() - 0.5) * 30) + 'px';
+                    heart.style.fontSize = s.size + 'px';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.classList.add('animate'), 10);
+                    setTimeout(() => heart.remove(), 2000);
+                }, s.delay);
+            });
+
+            // 波紋リング
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple-ring';
+            ripple.style.position = 'fixed';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ripple);
+
+            setTimeout(() => ripple.classList.add('animate'), 10);
+            setTimeout(() => ripple.remove(), 1200);
+        }
+
+        // ボタンと入力以外でハートを表示
+        function shouldShowHeart(target) {
+            const tag = target.tagName.toLowerCase();
+            if (tag === 'button' || tag === 'input') return false;
+            if (target.classList.contains('btn-gold')) return false;
+            if (target.closest('button') || target.closest('input')) return false;
+            return true;
+        }
+
+        let isTouched = false;
+
+        document.addEventListener('touchstart', function(e) {
+            if (!shouldShowHeart(e.target)) return;
+            isTouched = true;
+            const touch = e.touches[0];
+            createHeartEffect(touch.clientX, touch.clientY);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (isTouched) {
+                isTouched = false;
+                return;
+            }
+            if (!shouldShowHeart(e.target)) return;
+            createHeartEffect(e.clientX, e.clientY);
+        });
     </script>
 </body>
 </html>
