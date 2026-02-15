@@ -49,7 +49,7 @@
             /* ハートの形に切り抜き */
             clip-path: path('M150 289C141.5 289 30 201 30 126C30 80.5 66.5 44 112 44C127.5 44 141.5 48.5 150 57C158.5 48.5 172.5 44 188 44C233.5 44 270 80.5 270 126C270 201 158.5 289 150 289Z');
             background-color: #06132b;
-            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.25));
+            filter: drop-shadow(0 0 5px rgba(197, 160, 89, 0.08));
             will-change: transform;
             transform: translateZ(0);
         }
@@ -57,7 +57,7 @@
             content: '';
             position: absolute;
             inset: -10px;
-            background: radial-gradient(ellipse at center, transparent 60%, rgba(6, 19, 43, 0.8) 100%);
+            background: radial-gradient(ellipse at center, transparent 85%, rgba(6, 19, 43, 0.15) 100%);
             z-index: 2;
             pointer-events: none;
         }
@@ -70,8 +70,6 @@
             top: 70%;
             left: 48%;
             transform: translate(-50%, -50%);
-            mask-image: radial-gradient(ellipse 45% 40% at 50% 50%, black 10%, transparent 55%);
-            -webkit-mask-image: radial-gradient(ellipse 45% 40% at 50% 50%, black 10%, transparent 55%);
         }
         /* ふちをぼやかすオーバーレイ */
         .heart-frame::after {
@@ -81,7 +79,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse 55% 50% at 50% 50%, transparent 25%, rgba(6, 19, 43, 0.5) 50%, rgba(6, 19, 43, 0.85) 70%, rgba(6, 19, 43, 1) 90%);
+            background: radial-gradient(ellipse 55% 50% at 50% 50%, transparent 55%, rgba(6, 19, 43, 0.1) 70%, rgba(6, 19, 43, 0.3) 85%, rgba(6, 19, 43, 0.55) 100%);
             z-index: 3;
             pointer-events: none;
         }
@@ -382,9 +380,9 @@
             </div>
 
             <div id="content-day1" class="day-content">
-                <ul class="text-left text-sm space-y-4">
+                <ul class="text-left text-sm space-y-4 pl-8">
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00</span><span>ランチ</span></li>
-                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">（移動）</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">---移動---</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">15:00</span><span>川崎フロンターレ のサッカー観戦</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">会場：とどろきスタジアム</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">18:00</span><span>おいしいケーキさがしの旅</span></li>
@@ -412,10 +410,10 @@
             </div>
 
             <div id="content-day2" class="day-content">
-                <ul class="text-left text-sm space-y-4">
+                <ul class="text-left text-sm space-y-4 pl-8">
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">お昼頃</span><span>遅めの起床(予言)</span></li>
-                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00頃</span><span>おひるごはん</span></li>
-                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">（移動）</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00</span><span>おひるごはん</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">---移動---</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span>きよくんへの誕生日プレゼントさがしの旅</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">17:00</span><span>よるごはん</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">お店：釣船茶屋ざうお 新宿店</span></li>
@@ -442,10 +440,10 @@
             </div>
 
             <div id="content-day3" class="day-content">
-                <ul class="text-left text-sm space-y-4">
+                <ul class="text-left text-sm space-y-4 pl-8">
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">お昼頃</span><span>またまた遅めの起床(予言)</span></li>
-                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">（移動）</span></li>
-                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00頃</span><span>おひるごはん</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">---移動---</span></li>
+                    <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">12:00</span><span>おひるごはん</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">14:00</span><span>ビール 工場見学</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap"></span><span class="opacity-60">場所：キリンビール 横浜工場</span></li>
                     <li class="flex"><span class="gold-text mr-4 whitespace-nowrap">見学後</span><span>カフェで少し休憩</span></li>
